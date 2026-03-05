@@ -1,19 +1,19 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.DTOs.Tarefas;
-using ToDoList.Services.Tarefas;
+using ToDoList.DTOs.Projetos;
+using ToDoList.Services.Projetos;
 
 namespace ToDoList.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class TarefasController : ControllerBase
+public class ProjetosController : ControllerBase
 {
-    private readonly IServiceTarefa _service;
+    private readonly IServiceProjeto _service;
 
-    public TarefasController(IServiceTarefa service)
+    public ProjetosController(IServiceProjeto service)
     {
         _service = service;
     }
@@ -27,26 +27,26 @@ public class TarefasController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var tarefas = await _service.GetAllAsync(GetUsuarioId());
-        return Ok(tarefas);
+        var projetos = await _service.GetAllAsync(GetUsuarioId());
+        return Ok(projetos);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var tarefa = await _service.GetByIdAsync(id, GetUsuarioId());
-        return tarefa is null ? NotFound() : Ok(tarefa);
+        var projeto = await _service.GetByIdAsync(id, GetUsuarioId());
+        return projeto is null ? NotFound() : Ok(projeto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateTarefaDTO request)
+    public async Task<IActionResult> Create(CreateProjetoDTO request)
     {
-        var tarefa = await _service.CreateAsync(request, GetUsuarioId());
-        return CreatedAtAction(nameof(GetById), new { id = tarefa.TarefaId }, tarefa);
+        var projeto = await _service.CreateAsync(request, GetUsuarioId());
+        return CreatedAtAction(nameof(GetById), new { id = projeto.ProjetoId }, projeto);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, UpdateTarefaDTO request)
+    public async Task<IActionResult> Update(int id, UpdateProjetoDTO request)
     {
         try
         {
