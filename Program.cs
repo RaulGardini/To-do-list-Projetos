@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ToDoList.Data;
 using ToDoList.Repositories.Auth;
+using ToDoList.Repositories.Projetos;
 using ToDoList.Repositories.Tarefas;
 using ToDoList.Services.Auth;
+using ToDoList.Services.Projetos;
 using ToDoList.Services.Tarefas;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +39,8 @@ builder.Services.AddScoped<IServiceToken, ServiceToken>();
 builder.Services.AddScoped<IServiceAuth, ServiceAuth>();
 builder.Services.AddScoped<IRepositoryTarefa, RepositoryTarefa>();
 builder.Services.AddScoped<IServiceTarefa, ServiceTarefa>();
+builder.Services.AddScoped<IRepositoryProjeto, RepositoryProjeto>();
+builder.Services.AddScoped<IServiceProjeto, ServiceProjeto>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -68,6 +72,8 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -75,6 +81,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

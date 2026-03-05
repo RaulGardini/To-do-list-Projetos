@@ -9,6 +9,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Tarefa> Tarefas => Set<Tarefa>();
+    public DbSet<Projeto> Projetos => Set<Projeto>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
