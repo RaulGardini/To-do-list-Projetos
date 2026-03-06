@@ -1,0 +1,35 @@
+CREATE TABLE usuarios (
+    usuario_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(250) NOT NULL UNIQUE,
+    senha_hash TEXT NOT NULL,
+    criado_em TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE projetos (
+    projeto_id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    status CHAR(1) NOT NULL,
+    front_stack VARCHAR(200),
+    front_obs VARCHAR(500),
+    back_stack VARCHAR(200),
+    back_obs VARCHAR(500),
+    banco_de_dados VARCHAR(200),
+    banco_de_dados_obs VARCHAR(500),
+    data_inicio DATE,
+    data_final DATE
+);
+
+ALTER TABLE projetos ADD COLUMN usuario_id UUID NOT NULL REFERENCES usuarios(usuario_id);
+ALTER TABLE projetos ADD COLUMN obs varchar(500);
+
+CREATE TABLE tarefas (
+    tarefa_id SERIAL PRIMARY KEY,
+    projeto_id INTEGER NOT NULL REFERENCES projetos(projeto_id),
+    nome VARCHAR(100) NOT NULL,
+    status CHAR(1) NOT NULL,
+    tipo VARCHAR(50),
+    obs VARCHAR(500),
+    data_inicio DATE,
+    data_final DATE
+);
