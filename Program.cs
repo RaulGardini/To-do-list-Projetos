@@ -5,10 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 using ToDoList.Data;
 using ToDoList.Repositories.Auth;
 using ToDoList.Repositories.Projetos;
-using ToDoList.Repositories.Tarefas;
+using ToDoList.Repositories.TarefasProjeto;
 using ToDoList.Services.Auth;
 using ToDoList.Services.Projetos;
-using ToDoList.Services.Tarefas;
+using ToDoList.Services.TarefasProjeto;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,10 +37,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IRepositoryAuth, RepositoryAuth>();
 builder.Services.AddScoped<IServiceToken, ServiceToken>();
 builder.Services.AddScoped<IServiceAuth, ServiceAuth>();
-builder.Services.AddScoped<IRepositoryTarefa, RepositoryTarefa>();
-builder.Services.AddScoped<IServiceTarefa, ServiceTarefa>();
 builder.Services.AddScoped<IRepositoryProjeto, RepositoryProjeto>();
 builder.Services.AddScoped<IServiceProjeto, ServiceProjeto>();
+builder.Services.AddScoped<IRepositoryTarefaProjeto, RepositoryTarefaProjeto>();
+builder.Services.AddScoped<IServiceTarefaProjeto, ServiceTarefaProjeto>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
