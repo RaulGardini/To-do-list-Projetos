@@ -12,6 +12,12 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 ENV ASPNETCORE_ENVIRONMENT=Production
+
+# Num container o appsettings.json nunca muda em runtime. Sem isto o .NET abre
+# watchers inotify no boot e estoura o limite do host no Render (IOException).
+ENV DOTNET_hostBuilder__reloadConfigOnChange=false
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
 EXPOSE 10000
 
 # O Render injeta a porta em $PORT; o fallback cobre execucao local.
